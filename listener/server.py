@@ -17,14 +17,13 @@ def on_connect(client, userdata, flags, rc):
 
 client = mqtt.Client()
 client.on_connect = on_connect
-client.on_message = on_message
 
 client.connect(MQTT_HOST, MQTT_PORT, 60)
 client.loop_start()
 
 def detect(user, name):
     print("detect:" + user + ", " + name)
-    client.publish(MQTT_TOPIC, user + ", " + name)
+    client.publish(MQTT_TOPIC, "user: " + user + ", name: " + name)
     return
 
 models = []

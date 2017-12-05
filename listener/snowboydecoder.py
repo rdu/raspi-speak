@@ -10,6 +10,7 @@ import logging
 import wave
 import socket
 from io import BytesIO
+from speakerphat import clear, show, set_led
 
 
 MQTT_PORT=int(os.environ['MQTT_PORT'])
@@ -183,6 +184,12 @@ class HotwordDetector(object):
             if ans == -2:
                 if recording == 0:
                     if client != None:
+
+                        clear()
+                        for x in range(10):
+                           set_led(x,0)
+                        show()
+
                         client.close()
                         client = None
                 elif ans != 0:
@@ -195,6 +202,12 @@ class HotwordDetector(object):
                 logger.warning("Error initializing streams or reading audio data")
 
             elif ans > 0:
+
+                clear()
+                for x in range(10):
+                   set_led(x,255)
+                show()
+
                 message = "Keyword " + str(ans) + " detected at time: "
                 message += time.strftime("%Y-%m-%d %H:%M:%S",
                                          time.localtime(time.time()))

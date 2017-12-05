@@ -20,6 +20,8 @@ ENV MQTT_TOPIC=raspi-1/hotword
 
 WORKDIR /home
 
+RUN apt-get -y install python-smbus
+RUN pip install sn3218
 ADD https://s3-us-west-2.amazonaws.com/snowboy/snowboy-releases/rpi-arm-raspbian-8.0-1.1.1.tar.bz2  /home
 
 RUN tar xfj /home/rpi*.bz2 -C /home --strip-components=1
@@ -29,5 +31,6 @@ COPY snowboydecoder.py /home
 COPY models /home/models
 COPY train.sh /home
 COPY server.py /home
+COPY speakerphat.py /home
 
-ENTRYPOINT ['bin/bash']
+ENTRYPOINT ["python", "/home/server.py"]
